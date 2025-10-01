@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using ShoeShop.Repository;
 using ShoeShop.Repository.Entities;
 using ShoeShop.Services;
@@ -8,6 +10,8 @@ using ShoeShop.Services.Services;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 
 class Program
@@ -15,9 +19,12 @@ class Program
     static async Task Main()
     {
         var services = new ServiceCollection();
-        services.AddDbContext<ShoeShopDbContext>();
+        // Configure DbContext to use SQLite
+        services.AddDbContext<ShoeShopDbContext>(options =>
+            options.UseSqlite("Data Source=shoes.db"));
         services.AddScoped<IInventoryService, InventoryService>();
-        // Add other services as needed
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<ShoeShopDbContext>();
 
         var provider = services.BuildServiceProvider();
         var inventoryService = provider.GetRequiredService<IInventoryService>();
@@ -80,4 +87,4 @@ class Program
     }
 }
 
-// test succeeded// test succeeded
+// test succeeded// test succeededqli

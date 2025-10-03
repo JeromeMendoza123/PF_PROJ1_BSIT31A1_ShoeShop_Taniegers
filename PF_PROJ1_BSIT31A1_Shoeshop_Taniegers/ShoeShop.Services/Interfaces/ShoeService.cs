@@ -10,14 +10,15 @@ using ShoeShop.Services.Interfaces;
 
 namespace ShoeShop.Services.Services
 {
-    public class PurchaseOrderService : IPurchaseOrderService
+    public class ShoeService : IShoeService
     {
         private readonly ShoeShopDbContext _context;
 
-        public PurchaseOrderService(ShoeShopDbContext context)
+        public ShoeService(ShoeShopDbContext context)
         {
-            _context = context;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
         }
+
 
         public async Task<IEnumerable<ShoeDto>> GetAllShoesAsync()
         {
@@ -26,11 +27,11 @@ namespace ShoeShop.Services.Services
                 .Select(s => new ShoeDto
                 {
                     Id = s.Id,
-                    Name = s.Name,
-                    Brand = s.Brand,
+                    Name = s.Name ?? string.Empty,
+                    Brand = s.Brand ?? string.Empty,
                     Price = s.Price,
                     Cost = s.Cost,
-                    Description = s.Description,
+                    Description = s.Description ?? string.Empty,
                     ImageUrl = s.ImageUrl
                 }).ToListAsync();
         }
@@ -39,44 +40,54 @@ namespace ShoeShop.Services.Services
         {
             var shoe = await _context.Shoes.FindAsync(id);
             if (shoe == null || !shoe.IsActive) return null;
+
             return new ShoeDto
             {
                 Id = shoe.Id,
-                Name = shoe.Name,
-                Brand = shoe.Brand,
+                Name = shoe.Name ?? string.Empty,
+                Brand = shoe.Brand ?? string.Empty,
                 Price = shoe.Price,
                 Cost = shoe.Cost,
-                Description = shoe.Description,
+                Description = shoe.Description ?? string.Empty,
                 ImageUrl = shoe.ImageUrl
             };
         }
+
         public async Task AddShoeAsync(CreateShoeDto dto)
         {
+            if (dto == null) throw new ArgumentNullException(nameof(dto));
+
             var shoe = new Shoe
             {
-                Name = dto.Name,
-                Brand = dto.Brand,
-                Cost = dto.Cost,
+                Name = dto.Name ?? string.Empty,
+                Brand = dto.Brand ?? string.Empty,
                 Price = dto.Price,
-                Description = dto.Description,
+                Cost = dto.Cost,
+                Description = dto.Description ?? string.Empty,
                 ImageUrl = dto.ImageUrl,
                 IsActive = true,
                 CreatedDate = DateTime.UtcNow
             };
+
             _context.Shoes.Add(shoe);
             await _context.SaveChangesAsync();
         }
 
+
         public async Task UpdateShoeAsync(int id, CreateShoeDto dto)
         {
+            if (dto == null) throw new ArgumentNullException(nameof(dto));
+
             var shoe = await _context.Shoes.FindAsync(id);
             if (shoe == null || !shoe.IsActive) return;
-            shoe.Name = dto.Name;
-            shoe.Brand = dto.Brand;
-            shoe.Cost = dto.Cost;
+
+            shoe.Name = dto.Name ?? string.Empty;
+            shoe.Brand = dto.Brand ?? string.Empty;
             shoe.Price = dto.Price;
-            shoe.Description = dto.Description;
+            shoe.Cost = dto.Cost;
+            shoe.Description = dto.Description ?? string.Empty;
             shoe.ImageUrl = dto.ImageUrl;
+
             await _context.SaveChangesAsync();
         }
 
@@ -84,6 +95,7 @@ namespace ShoeShop.Services.Services
         {
             var shoe = await _context.Shoes.FindAsync(id);
             if (shoe == null || !shoe.IsActive) return;
+
             shoe.IsActive = false;
             await _context.SaveChangesAsync();
         }

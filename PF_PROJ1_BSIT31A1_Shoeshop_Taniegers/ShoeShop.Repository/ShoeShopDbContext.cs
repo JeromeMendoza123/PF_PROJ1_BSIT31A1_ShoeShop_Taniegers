@@ -1,14 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using ShoeShop.Repository.Entities;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using ShoeShop.Repository.Entities;
 
 namespace ShoeShop.Repository
 {
-
-    public class ShoeShopDbContext : IdentityDbContext<ApplicationUser>
+    public class ShoeShopDbContext : DbContext
     {
-  
         public ShoeShopDbContext(DbContextOptions<ShoeShopDbContext> options) : base(options) { }
         public ShoeShopDbContext() { }
 

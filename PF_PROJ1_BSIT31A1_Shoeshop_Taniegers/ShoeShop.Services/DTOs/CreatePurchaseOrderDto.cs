@@ -1,18 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ShoeShop.Services.DTOs
+﻿namespace ShoeShop.Services.DTOs
 {
     public class CreatePurchaseOrderDto
     {
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string Brand { get; set; }
-        [Range(0, double.MaxValue)]
-        public decimal Cost { get; set; }
-        [Range(0, double.MaxValue)]
-        public decimal Price { get; set; }
-        public string? Description { get; set; }
-        public string? ImageUrl { get; set; }
+        public string CustomerName { get; set; } = string.Empty;
+        public decimal Total { get; set; }
+        public string? Notes { get; set; }
     }
 }

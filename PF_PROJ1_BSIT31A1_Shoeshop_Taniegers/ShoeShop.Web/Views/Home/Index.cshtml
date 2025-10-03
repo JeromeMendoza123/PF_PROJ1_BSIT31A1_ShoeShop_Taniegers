@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ShoeShop.Services.DTOs.ShoeDto>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container mt-4">
+    <h2>Featured Shoes</h2>
+    <div class="row">
+        @foreach (var shoe in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <img src="@shoe.ImageUrl" class="card-img-top" alt="@shoe.Name" />
+                    <div class="card-body">
+                        <h5 class="card-title">@shoe.Name</h5>
+                        <p class="card-text">Brand: @shoe.Brand</p>
+                        <p class="card-text">Price: ₱@shoe.Price</p>
+                        <button class="btn btn-primary" onclick="addToCart(@shoe.Id)">Add to Cart</button>
+                        <a href="/Shoes/Details/@shoe.Id" class="btn btn-info">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="toastContainer" class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999"></div>
+
+@section Scripts {
+    <script>
+        function addToCart(id) {
+            $.post('/Home/AddToCart', { id: id, quantity: 1 }, function(res) {
+                const bgClass = res.success ? 'bg-success' : 'bg-danger';
+                const toastId = `toast-${Date.now()}`;
+                const toastHtml = `
+                    <div id="${toastId}" class="toast align-items-center text-white ${bgClass} border-0 mb-2" role="alert">
+                        <div class="d-flex">
+                            <div class="toast-body">${res.message}</div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                        </div>
+                    </div>`;
+                $('#toastContainer').append(toastHtml);
+                new bootstrap.Toast(document.getElementById(toastId), { delay: 2000 }).show();
+            });
+        }
+    </script>
+}

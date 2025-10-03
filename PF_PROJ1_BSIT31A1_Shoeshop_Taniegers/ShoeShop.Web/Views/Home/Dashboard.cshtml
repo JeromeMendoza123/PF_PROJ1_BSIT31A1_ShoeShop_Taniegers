@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4"> Inventory Dashboard</h2>
+
+    <div class="row">
+        <!-- Card: Total Shoes -->
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Total Shoes</h5>
+                    <p class="card-text fs-4 fw-bold">150</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Active Brands -->
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Active Brands</h5>
+                    <p class="card-text fs-4 fw-bold">12</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Low Stock -->
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Low Stock Items</h5>
+                    <p class="card-text fs-4 fw-bold">8</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card: Pull Outs -->
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3 shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Pull Outs</h5>
+                    <p class="card-text fs-4 fw-bold">5</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="row mt-4">
+        <!-- Sales by Brand -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Sales by Brand</h5>
+                    <canvas id="brandChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Trends -->
+        <div class="col-md-6 mb-4">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Inventory Trends</h5>
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        // Pie chart - Sales by Brand
+        var ctx1 = document.getElementById('brandChart').getContext('2d');
+        var brandChart = new Chart(ctx1, {
+            type: 'pie',
+            data: {
+                labels: ['Nike', 'Adidas', 'Puma', 'Converse'],
+                datasets: [{
+                    data: [40, 25, 20, 15],
+                    backgroundColor: ['#007bff', '#28a745', '#ffc107', '#dc3545']
+                }]
+            }
+        });
+
+        // Line chart - Inventory Trends
+        var ctx2 = document.getElementById('trendChart').getContext('2d');
+        var trendChart = new Chart(ctx2, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+                datasets: [{
+                    label: 'Shoes in Stock',
+                    data: [120, 110, 130, 125, 140],
+                    borderColor: '#007bff',
+                    fill: false,
+                    tension: 0.3
+                }]
+            }
+        });
+    </script>
+}

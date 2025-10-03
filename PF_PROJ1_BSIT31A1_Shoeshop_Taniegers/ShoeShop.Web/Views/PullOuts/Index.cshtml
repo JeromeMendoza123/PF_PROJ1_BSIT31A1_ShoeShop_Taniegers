@@ -1,0 +1,136 @@
+﻿@model IEnumerable<ShoeShop.Services.DTOs.PullOutRequestDto>
+@{
+    ViewData["Title"] = "Pull Outs";
+}
+
+<div class="container-fluid p-4">
+    <h2>Pull Out Requests</h2>
+    <button class="btn btn-success mb-3" onclick="openPullOutModal()">+ Add Pull Out</button>
+
+    <table id="pullOutTable" class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Cost</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Brand</td>
+                    <td>@item.Cost</td>
+                    <td>@item.Price</td>
+                    <td>@item.Description</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" onclick="openEditPullOutModal(@item.Id)">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="confirmDeletePullOut(@item.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@await Html.PartialAsync("_PullOutModal", model: null, new ViewDataDictionary(ViewData)
+{
+    { "ModalId", "pullOutModal" },
+    { "ModalTitle", "Add/Edit Pull Out" },
+    { "FormId", "pullOutForm" },
+    { "SubmitButtonText", "Save" }
+})
+
+@section Scripts {
+    <script>
+        const pullOutModalEl = document.getElementById('pullOutModal');
+        const pullOutModal = pullOutModalEl ? new bootstrap.Modal(pullOutModalEl) : null;
+
+        // Open Add Pull Out Modal
+        window.openPullOutModal = function() {
+            $('#pullOutForm')[0].reset();
+            $('#pullOutForm').data('action', '/PullOuts/Create');
+            if (pullOutModal) pullOutModal.show();
+        }
+
+        // Open Edit Pull Out Modal
+        window.openEditPullOutModal = function(id) {
+            $.get('/PullOuts/GetPullOut?id=' + id, function(data) {
+                if (!data.success) {
+                    alert(data.message || "Pull out not found!");
+                    return;
+                }
+                $('#pullOutForm [name="Id"]').val(data.id);
+                $('#pullOutForm [name="Name"]').val(data.name);
+                $('#pullOutForm [name="Brand"]').val(data.brand);
+                $('#pullOutForm [name="Cost"]').val(data.cost);
+                $('#pullOutForm [name="Price"]').val(data.price);
+                $('#pullOutForm [name="Description"]').val(data.description);
+                $('#pullOutForm [name="ImageUrl"]').val(data.imageUrl);
+                $('#pullOutForm').data('action', '/PullOuts/Edit');
+                if (pullOutModal) pullOutModal.show();
+            });
+        }
+
+        // Submit Add/Edit Pull Out
+        window.submitPullOutForm = function() {
+            const form = $('#pullOutForm')[0];
+            const data = $(form).serialize();
+            const action = $('#pullOutForm').data('action');
+
+            $.post(action, data, function(response) {
+                if (pullOutModal) pullOutModal.hide();
+                alert(response.message || "Saved successfully!");
+                if (response.success) refreshPullOutTable();
+            });
+        }
+
+        // Confirm Delete Pull Out
+        window.confirmDeletePullOut = function(id) {
+            if (confirm("Are you sure you want to delete this pull out?")) {
+                $.post('/PullOuts/Delete', { id: id }, function(response) {
+                    alert(response.message || "Deleted successfully!");
+                    if (response.success) refreshPullOutTable();
+                });
+            }
+        }
+
+        // Refresh Pull Out Table
+        function refreshPullOutTable() {
+            $.get('/PullOuts', function(html) {
+                const newTbody = $(html).find('#pullOutTable tbody').html();
+                $('#pullOutTable tbody').html(newTbody);
+
+                if ($.fn.DataTable.isDataTable('#pullOutTable')) {
+                    $('#pullOutTable').DataTable().destroy();
+                }
+                $('#pullOutTable').DataTable({
+                    paging: true,
+                    searching: true,
+                    ordering: true,
+                    info: true,
+                    autoWidth: false,
+                    columnDefs: [{ orderable: false, targets: -1 }]
+                });
+            });
+        }
+
+        // Initialize DataTable
+        $(document).ready(function() {
+            $('#pullOutTable').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                autoWidth: false,
+                columnDefs: [{ orderable: false, targets: -1 }]
+            });
+        });
+    </script>
+}

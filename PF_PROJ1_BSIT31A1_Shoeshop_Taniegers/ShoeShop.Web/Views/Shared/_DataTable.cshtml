@@ -1,0 +1,28 @@
+﻿@* Expects: Id, Columns, Rows *@
+@{
+    var tableId = ViewData["TableId"] ?? "dataTable";
+    var tableColumns = ViewData["Columns"] ?? "";
+    var tableRows = ViewData["Rows"] ?? "";
+}
+
+<table id="@tableId" class="table table-striped table-bordered">
+    <thead>
+        @Html.Raw(tableColumns)
+    </thead>
+    <tbody>
+        @Html.Raw(tableRows)
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#@tableId').DataTable({
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true
+            });
+        });
+    </script>
+}

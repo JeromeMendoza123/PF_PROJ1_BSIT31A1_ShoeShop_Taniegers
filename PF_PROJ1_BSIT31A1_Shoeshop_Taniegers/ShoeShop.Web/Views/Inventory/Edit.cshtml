@@ -1,0 +1,35 @@
+﻿@model ShoeShop.Services.DTOs.ShoeDto
+
+<h2>Edit Shoe</h2>
+
+<form asp-action="Edit" method="post" class="row g-3">
+    <input type="hidden" asp-for="Id" />
+    <div class="col-md-6">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Brand" class="form-label"></label>
+        <input asp-for="Brand" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Cost" class="form-label"></label>
+        <input asp-for="Cost" class="form-control" />
+    </div>
+    <div class="col-12">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="col-12">
+        <label asp-for="ImageUrl" class="form-label"></label>
+        <input asp-for="ImageUrl" class="form-control" />
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-success">Update</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

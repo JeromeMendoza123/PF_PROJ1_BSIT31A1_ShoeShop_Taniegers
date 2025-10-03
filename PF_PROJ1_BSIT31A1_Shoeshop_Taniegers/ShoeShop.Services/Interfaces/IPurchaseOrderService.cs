@@ -1,16 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using ShoeShop.Services.DTOs;
+﻿using ShoeShop.Services.DTOs;
 
 namespace ShoeShop.Services.Interfaces
 {
     public interface IPurchaseOrderService
     {
-        Task<IEnumerable<ShoeDto>> GetAllShoesAsync();
-        Task<ShoeDto?> GetShoeByIdAsync(int id);
-        Task AddShoeAsync(CreateShoeDto dto);
-        Task UpdateShoeAsync(int id, CreateShoeDto dto);
-        Task DeleteShoeAsync(int id);
-
+        IEnumerable<PurchaseOrderDto> GetAllOrders();
+        PurchaseOrderDto? GetOrderById(int id);
+        void AddOrder(CreatePurchaseOrderDto dto);
+        void UpdateOrder(int id, CreatePurchaseOrderDto dto);
+        void DeleteOrder(int id);
     }
 }

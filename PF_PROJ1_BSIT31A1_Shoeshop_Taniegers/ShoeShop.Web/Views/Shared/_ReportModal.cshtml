@@ -1,0 +1,43 @@
+﻿<div class="modal fade" id="reportModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="reportForm">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add/Edit Report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" name="Id" />
+                    <div class="mb-3">
+                        <label>Name</label>
+                        <input type="text" name="Name" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Brand</label>
+                        <input type="text" name="Brand" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Cost</label>
+                        <input type="number" name="Cost" class="form-control" step="0.01" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Price</label>
+                        <input type="number" name="Price" class="form-control" step="0.01" required />
+                    </div>
+                    <div class="mb-3">
+                        <label>Description</label>
+                        <textarea name="Description" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label>Image URL</label>
+                        <input type="text" name="ImageUrl" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" onclick="submitReportForm()">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

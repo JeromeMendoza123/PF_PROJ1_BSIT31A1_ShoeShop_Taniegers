@@ -1,0 +1,25 @@
+﻿@using System.Text.Json
+@{
+    var toastMessages = new Dictionary<string, List<string>>();
+
+    string[] types = { "SuccessMessage", "ErrorMessage", "InfoMessage" };
+    foreach (var type in types)
+    {
+        if (TempData[type] != null)
+        {
+            if (TempData[type] is string singleMsg)
+            {
+                toastMessages[type] = new List<string> { singleMsg };
+            }
+            else if (TempData[type] is IEnumerable<string> listMsg)
+            {
+                toastMessages[type] = listMsg.ToList();
+            }
+        }
+    }
+
+    var toastMessagesJson = JsonSerializer.Serialize(toastMessages);
+}
+<script>
+    window.toastMessages = JSON.parse('@Html.Raw(toastMessagesJson.Replace("'", "\\'"))');
+</script>

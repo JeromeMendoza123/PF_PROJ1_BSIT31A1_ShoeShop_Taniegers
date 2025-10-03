@@ -1,0 +1,144 @@
+﻿@using System.Text.Json
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShoeShop.Web</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #wrapper {
+            display: flex;
+        }
+
+        #sidebar-wrapper {
+            min-width: 250px;
+            max-width: 250px;
+            height: 100vh;
+            background: #212529;
+            transition: all 0.3s;
+        }
+
+            #sidebar-wrapper .sidebar-heading {
+                font-size: 1.3rem;
+                padding: 1rem;
+                background: #0d6efd;
+                text-align: center;
+            }
+
+            #sidebar-wrapper .list-group-item {
+                border: none;
+                padding: 15px 20px;
+                font-size: 0.95rem;
+                transition: 0.2s;
+            }
+
+                #sidebar-wrapper .list-group-item:hover,
+                #sidebar-wrapper .list-group-item.active {
+                    background: #0d6efd;
+                    color: white;
+                }
+
+        #page-content-wrapper {
+            flex-grow: 1;
+            background-color: #f8f9fa;
+        }
+
+        .navbar {
+            background: white !important;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .content-wrapper {
+            padding: 20px;
+        }
+
+        footer {
+            background: #f1f1f1;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <div class="sidebar-heading text-white fw-bold">👟 Shoe Shop</div>
+            <div class="list-group list-group-flush">
+                <a asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-home me-2"></i> Dashboard
+                </a>
+                <a asp-controller="Shoes" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-shoe-prints me-2"></i> Shoes
+                </a>
+                <a asp-controller="PurchaseOrders" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-cart-plus me-2"></i> Orders
+                </a>
+                <a asp-controller="PullOuts" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-undo me-2"></i> Pull Outs
+                </a>
+                <a asp-controller="Reports" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-white">
+                    <i class="fas fa-file-alt me-2"></i> Reports
+                </a>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+                <div class="container-fluid">
+                    <button class="btn btn-outline-primary me-2" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <span class="navbar-brand fw-bold">Shoe Shop System</span>
+                    <div class="ms-auto d-flex align-items-center">
+                        @if (User?.Identity?.IsAuthenticated == true)
+                        {
+                            <span class="me-3">👤 @User.Identity?.Name</span>
+                            <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Login" class="btn btn-outline-primary btn-sm me-2">Login</a>
+                            <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-sm">Sign Up</a>
+                        }
+                    </div>
+                </div>
+            </nav>
+
+            <div class="content-wrapper">
+                @RenderBody()
+            </div>
+
+            <footer class="text-muted text-center">
+                <div>&copy; 2025 - ShoeShop.Web | All Rights Reserved</div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $("#menu-toggle").click(function () {
+            $("#sidebar-wrapper").toggleClass("d-none");
+        });
+    </script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await Html.PartialAsync("_Toast")
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

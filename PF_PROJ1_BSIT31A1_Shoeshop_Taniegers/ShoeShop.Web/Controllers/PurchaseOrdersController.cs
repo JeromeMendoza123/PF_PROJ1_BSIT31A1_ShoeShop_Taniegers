@@ -4,6 +4,7 @@ using ShoeShop.Services.Interfaces;
 
 namespace ShoeShop.Web.Controllers
 {
+    // PurchaseOrdersController: Handles the complete purchase order workflow
     public class PurchaseOrdersController : Controller
     {
         private readonly IPurchaseOrderService _service;
@@ -13,12 +14,14 @@ namespace ShoeShop.Web.Controllers
             _service = service;
         }
 
+        // Displays all purchase orders
         public IActionResult Index()
         {
             var orders = _service.GetAllOrders();
             return View(orders);
         }
 
+        // Gets a specific order (AJAX)
         [HttpGet]
         public IActionResult GetOrder(int id)
         {
@@ -27,6 +30,7 @@ namespace ShoeShop.Web.Controllers
             return Json(order);
         }
 
+        // Creates a new purchase order
         [HttpPost]
         public IActionResult Create(CreatePurchaseOrderDto dto)
         {
@@ -36,6 +40,7 @@ namespace ShoeShop.Web.Controllers
             return Json(new { success = true, message = "Order added successfully!" });
         }
 
+        // Edits an existing purchase order
         [HttpPost]
         public IActionResult Edit(int id, CreatePurchaseOrderDto dto)
         {
@@ -43,6 +48,7 @@ namespace ShoeShop.Web.Controllers
             return Json(new { success = true, message = "Order updated successfully!" });
         }
 
+        // Deletes a purchase order
         [HttpPost]
         public IActionResult Delete(int id)
         {

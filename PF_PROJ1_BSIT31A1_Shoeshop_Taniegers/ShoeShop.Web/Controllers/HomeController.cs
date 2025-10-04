@@ -5,6 +5,7 @@ using ShoeShop.Services.Interfaces;
 
 namespace ShoeShop.Web.Controllers
 {
+    // DashboardController: Main dashboard with statistics and entry point for the app
     public class HomeController : Controller
     {
         private readonly IShoeService _shoeService;
@@ -16,6 +17,7 @@ namespace ShoeShop.Web.Controllers
             _cartService = cartService;
         }
 
+        // Displays dashboard with featured shoes and statistics
         public async Task<IActionResult> Index()
         {
             // Get all active shoes
@@ -23,6 +25,7 @@ namespace ShoeShop.Web.Controllers
             return View(shoes);
         }
 
+        // Handles AJAX add-to-cart operation
         [HttpPost]
         public IActionResult AddToCart(int id, int quantity = 1)
         {

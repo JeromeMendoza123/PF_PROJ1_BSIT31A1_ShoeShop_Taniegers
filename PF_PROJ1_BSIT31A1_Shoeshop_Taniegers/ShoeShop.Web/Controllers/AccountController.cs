@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShoeShop.Web.Controllers
 {
+    // AccountController: Handles authentication, user management, and role-based authorization
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

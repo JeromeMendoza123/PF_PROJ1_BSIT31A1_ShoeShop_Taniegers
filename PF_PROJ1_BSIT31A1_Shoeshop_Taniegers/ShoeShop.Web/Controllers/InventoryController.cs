@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace ShoeShop.Web.Controllers
 {
+    // InventoryController: Handles all shoe and stock management operations
     public class InventoryController : Controller
     {
         private readonly IInventoryService _inventoryService;
@@ -14,14 +15,14 @@ namespace ShoeShop.Web.Controllers
             _inventoryService = inventoryService;
         }
 
-        
+        // Displays inventory list
         public async Task<IActionResult> Index()
         {
             var shoes = await _inventoryService.GetAllShoesAsync();
             return View(shoes);
         }
 
-        
+        // Shows details for a specific shoe
         public async Task<IActionResult> Details(int id)
         {
             var shoe = await _inventoryService.GetShoeByIdAsync(id);
@@ -29,13 +30,13 @@ namespace ShoeShop.Web.Controllers
             return View(shoe);
         }
 
-        
+        // Returns create shoe form
         public IActionResult Create()
         {
             return View();
         }
 
-        
+        // Handles shoe creation
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateShoeDto dto)
@@ -47,7 +48,7 @@ namespace ShoeShop.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+        // Returns edit shoe form
         public async Task<IActionResult> Edit(int id)
         {
             var shoe = await _inventoryService.GetShoeByIdAsync(id);
@@ -65,7 +66,7 @@ namespace ShoeShop.Web.Controllers
             return View(dto);
         }
 
-        
+        // Handles shoe editing
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, CreateShoeDto dto)
@@ -77,7 +78,7 @@ namespace ShoeShop.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        
+        // Handles shoe deletion
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)

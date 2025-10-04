@@ -1,0 +1,15 @@
+﻿@model ShoeShop.Services.DTOs.ShoeDto
+
+<h2>@Model.Name</h2>
+
+<div class="card" style="max-width:600px;">
+    <div class="card-body">
+        <h5 class="card-title">@Model.Brand</h5>
+        <p class="card-text">@Model.Description</p>
+        <p><strong>Price:</strong> @Model.Price</p>
+        <p><strong>Cost:</strong> @Model.Cost</p>
+        <img src="@Model.ImageUrl" class="img-fluid" alt="@Model.Name" />
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary mt-3">Back to List</a>

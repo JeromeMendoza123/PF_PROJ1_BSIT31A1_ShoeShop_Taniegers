@@ -5,16 +5,19 @@ using System.Linq;
 
 namespace ShoeShop.Web.Controllers
 {
+    // PullOutsController: Handles stock removal operations and pull-out approval workflow
     public class PullOutsController : Controller
     {
         private static List<PullOutRequestDto> pullOuts = new();
         private static int nextId = 1;
 
+        // Displays all pull-out requests
         public IActionResult Index()
         {
             return View(pullOuts);
         }
 
+        // Gets a specific pull-out request (AJAX)
         [HttpGet]
         public IActionResult GetPullOut(int id)
         {
@@ -33,6 +36,7 @@ namespace ShoeShop.Web.Controllers
             });
         }
 
+        // Creates a new pull-out request
         [HttpPost]
         public IActionResult Create(PullOutRequestDto request)
         {
@@ -41,6 +45,7 @@ namespace ShoeShop.Web.Controllers
             return Json(new { success = true, message = "Pull out request added successfully!" });
         }
 
+        // Edits an existing pull-out request
         [HttpPost]
         public IActionResult Edit(PullOutRequestDto request)
         {
@@ -57,6 +62,7 @@ namespace ShoeShop.Web.Controllers
             return Json(new { success = true, message = "Pull out request updated successfully!" });
         }
 
+        // Deletes a pull-out request
         [HttpPost]
         public IActionResult Delete(int id)
         {

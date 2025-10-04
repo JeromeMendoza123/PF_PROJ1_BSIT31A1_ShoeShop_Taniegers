@@ -116,3 +116,21 @@
         height: 120px;
     }
 }
+
+/* Override blue design elements with 'indianred' */
+.sidebar-heading {
+    background: indianred !important;
+}
+#sidebar-wrapper .sidebar-heading {
+    background: indianred !important;
+}
+#sidebar-wrapper .list-group-item.active,
+#sidebar-wrapper .list-group-item:hover {
+    background: indianred !important;
+    color: #fff !important;
+}
+.btn-primary, .btn-outline-primary, .navbar .btn-outline-primary {
+    background-color: indianred !important;
+    border-color: indianred !important;
+    color: #fff !important;
+}

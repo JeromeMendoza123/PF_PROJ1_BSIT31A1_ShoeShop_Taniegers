@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace ShoeShop.Web.Controllers
 {
+    // ReportsController: Handles inventory reports, analytics, filtering, and export
     public class ReportsController : Controller
     {
         private static List<InventoryReportDto> reports = new()
@@ -14,11 +15,13 @@ namespace ShoeShop.Web.Controllers
         };
         private static int nextId = 3;
 
+        // Displays all inventory reports
         public IActionResult Index()
         {
             return View(reports);
         }
 
+        // Gets a specific report (AJAX)
         [HttpGet]
         public IActionResult GetReport(int id)
         {
@@ -28,6 +31,7 @@ namespace ShoeShop.Web.Controllers
             return Json(report);
         }
 
+        // Creates a new report
         [HttpPost]
         public IActionResult Create(InventoryReportDto report)
         {
@@ -36,6 +40,7 @@ namespace ShoeShop.Web.Controllers
             return Json(new { success = true, message = "Report added successfully!" });
         }
 
+        // Edits an existing report
         [HttpPost]
         public IActionResult Edit(InventoryReportDto report)
         {
@@ -52,6 +57,7 @@ namespace ShoeShop.Web.Controllers
             return Json(new { success = true, message = "Report updated successfully!" });
         }
 
+        // Deletes a report
         [HttpPost]
         public IActionResult Delete(int id)
         {

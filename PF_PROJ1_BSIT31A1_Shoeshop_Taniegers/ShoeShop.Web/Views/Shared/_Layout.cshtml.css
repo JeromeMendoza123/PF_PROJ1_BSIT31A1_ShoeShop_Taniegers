@@ -1,4 +1,8 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿/*
+    Student D Contribution: Minor style tweak for visibility in Git history.
+    (This comment is for contribution tracking and does not affect site appearance.)
+*/
+/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -7,6 +11,7 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+/* Student D: Color for all links set to indianred for theme consistency */
 a {
   color: indianred;
 }

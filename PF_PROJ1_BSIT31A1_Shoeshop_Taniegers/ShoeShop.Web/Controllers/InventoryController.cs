@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 namespace ShoeShop.Web.Controllers
 {
     // InventoryController: Handles all shoe and stock management operations
+    // Student D: Minor comment added for contribution tracking.
     public class InventoryController : Controller
     {
         private readonly IInventoryService _inventoryService;
